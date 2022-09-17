@@ -1,0 +1,47 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: "simple-kubernetes-webhook.acme.com"
+webhooks:
+  - name: "simple-kubernetes-webhook.acme.com"
+    namespaceSelector:
+      matchLabels:
+        admission-webhook: enabled
+    rules:
+      - apiGroups: [""]
+        apiVersions: ["v1"]
+        operations: ["CREATE"]
+        resources: ["pods"]
+        scope: "*"
+    clientConfig:
+      service:
+        namespace: default
+        name: simple-kubernetes-webhook
+        path: /validate-pods
+        port: 443
+      caBundle: |
+          LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURRekNDQWl1Z0F3SUJBZ0lVYzZrMkx3cGFV
+          clRSZ0JTbkJWc3lHL1FCWWJ3d0RRWUpLb1pJaHZjTkFRRUwKQlFBd01URUxNQWtHQTFVRUJoTUNR
+          VlV4SWpBZ0JnTlZCQU1NR1hOcGJYQnNaUzFyZFdKbGNtNWxkR1Z6TFhkbApZbWh2YjJzd0hoY05N
+          akl3T0RFNU1UY3hNVFUwV2hjTk1qTXdPREU1TVRjeE1UVTBXakF4TVFzd0NRWURWUVFHCkV3SkJW
+          VEVpTUNBR0ExVUVBd3daYzJsdGNHeGxMV3QxWW1WeWJtVjBaWE10ZDJWaWFHOXZhekNDQVNJd0RR
+          WUoKS29aSWh2Y05BUUVCQlFBRGdnRVBBRENDQVFvQ2dnRUJBTWx4Q0RBaGdxSFR4Qm5GSEVLRGNY
+          aWZ6Q0U0TXZHSApZd3YxYlFpYit4STBSK1lKSVIwb2xiRFdxWStmeUd6a1BCQk5lTklYS2JZcm1U
+          MmVRUXR1aWdrZU04MGllTTkzClZKMVh6anhsZnhYd3dYdGRPTnhVL2RJSTZYS3FXeFFLaVN6VkY0
+          dWU2ZUl2TWt4Q2dBcTU5dWxJTFQycUNudXAKVDFoOVR1MExiNUwzTno3NU5pTTd6dUg1V3o5OFdZ
+          eHVVSVR0Z1Rna2FGZXZHUjVmQmtKbEdiRHdvSElIcUxZUgo4SWxqa3RFZXdLd29PY2FKSTJtejZl
+          SzBlVnFXc1VpVTlveXIwQzMvcy8xdHdwNkxDUzV1ck82Vk5CcjNpNXNyCkJUMTg4MEFWUWhuL3hM
+          Q3QzSGhVTFlJWk9DcCsrVlVUd09UZE9oN1JxYjhzNWZMbGZoUUhWQTBDQXdFQUFhTlQKTUZFd0hR
+          WURWUjBPQkJZRUZObkloQi9heHN5c3ptZXZnazVla2x4dzlXK2pNQjhHQTFVZEl3UVlNQmFBRk5u
+          SQpoQi9heHN5c3ptZXZnazVla2x4dzlXK2pNQThHQTFVZEV3RUIvd1FGTUFNQkFmOHdEUVlKS29a
+          SWh2Y05BUUVMCkJRQURnZ0VCQUNkcnh3bm9lZHpSdzA5cVFaUFYvSTN0amtYMUhNeloxaGQ1OHRn
+          Y2hWZzZLQmpyZkUwNGErZ00Kcmp5RzNqdmwzcDMrWWNYSzdoY2kxbitGTm1GZVFvdmRvbGMyRmIz
+          WlgxR3pMTHZlbUJpQmFrK3k5czhMZ3EwWApCOFNYVFh3K2lrWnl4S2dLa1Ava3lJaFRqN1Z4MUNo
+          WlVlSFpQOGN1L1NDNHJDeFBnL3JFaXFPTFV1SytLN2xUCkhGMkhMUjlIeXFJdnlhOTJBbit6clVR
+          WVhxMUdBLzVOQkxlRjArODlQWmtvQkRBNlp4WDdVbHdzM1gvV0xhZnYKeS9QSUZaSW8zVUp1ckh1
+          ejZOUHlCSDdRMFdKc0FUZkVDQ1pRUjlNK3lINlJDZmpCd3JzU1EwSUh1dzM4cUhiRwpPTUZpaHZN
+          cm56YXlYWUJpOGNSai8wQ3JxdTZqQkJzPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+
+    admissionReviewVersions: ["v1"]
+    sideEffects: None
+    timeoutSeconds: 2

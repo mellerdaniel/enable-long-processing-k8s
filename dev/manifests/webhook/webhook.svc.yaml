@@ -1,0 +1,45 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: simple-kubernetes-webhook-getter-cr
+rules:
+  - apiGroups: [""]
+    resources: ["pods","namespaces","projects","users","serviceaccounts"]
+    verbs: ["get","watch","list"]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: simple-kubernetes-webhook-sa
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: simple-kubernetes-webhook-getter-crb
+subjects:
+  - kind: ServiceAccount
+    name: simple-kubernetes-webhook-sa
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  name: simple-kubernetes-webhook-getter-cr
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: simple-kubernetes-webhook
+  name: simple-kubernetes-webhook
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - port: 443
+      protocol: TCP
+      targetPort: 443
+      nodePort: 30100
+  selector:
+    app: simple-kubernetes-webhook
