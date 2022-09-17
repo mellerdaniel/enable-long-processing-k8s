@@ -1,4 +1,4 @@
-module github.com/slackhq/simple-kubernetes-webhook
+module github.com/mellerdaniel/enable-long-processing-k8s
 
 go 1.18
 
